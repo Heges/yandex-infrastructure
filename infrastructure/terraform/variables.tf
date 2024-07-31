@@ -7,3 +7,9 @@ variable "secret_key" {
 variable "token" {
     description = "token to yandexcloud"
 }
+variable "folder_id" {
+    description = "folder_id"
+}
+variable "cloud_id" {
+    description = "cloud_id"
+}
