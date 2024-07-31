@@ -23,4 +23,4 @@ variable "platform_id" {
   default     = "standard-v1"
   type        = string
   description = "platform_id"
-}   
+}    
