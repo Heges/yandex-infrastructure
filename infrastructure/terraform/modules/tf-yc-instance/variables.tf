@@ -23,4 +23,9 @@ variable "platform_id" {
   default     = "standard-v1"
   type        = string
   description = "platform_id"
+}
+variable "disk_size" {
+  description = "Размер диска в гигабайтах"
+  type        = number
+  default     = 50
 }    
