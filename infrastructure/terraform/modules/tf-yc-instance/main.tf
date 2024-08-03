@@ -33,9 +33,23 @@ resource "yandex_compute_instance" "vm-1" {
     # здесь можно указать скрипт, который запустится при создании ВМ
     # или список SSH-ключей для доступа на ВМ
     metadata = {
+        ssh-keys = "ansible:${file("~/.ssh/id_rsa.pub")}"
+        user-data = <<-EOF
+                    #!/bin/bash
+                    groupadd ansible
+                    useradd -g ansible ansible
+                    mkdir -p /home/ansible/.ssh
+                    chmod 700 /home/ansible/.ssh
+                    echo '${file("~/.ssh/id_rsa.pub")}' > /home/ansible/.ssh/authorized_keys
+                    chmod 600 /home/ansible/.ssh/authorized_keys
+                    echo 'ansible ALL=(ALL) NOPASSWD:ALL' | sudo tee /etc/sudoers.d/ansible
+                    sudo chown -R ansible:ansible /home/ansible
+                    EOF
+	}
+	#metadata = {
         #ssh-keys = "ubuntu:${file("~/.ssh/id_rsa.pub")}"
-        ssh-keys = "AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBJogSbb/PNfBUaQoIVoUxBpex7VdkQFI8zL0akaAtDKWg6583IW27twVz8PhX+LIeSMCdcoq1rO/zHWRCgFNqKg== student@chapter5-lesson2-std-030-18"
-    }
+        #ssh-keys = "AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBJogSbb/PNfBUaQoIVoUxBpex7VdkQFI8zL0akaAtDKWg6583IW27twVz8PhX+LIeSMCdcoq1rO/zHWRCgFNqKg== student@chapter5-lesson2-std-030-18"
+    #}
 	
 	scheduling_policy {
 		# preemptible = true

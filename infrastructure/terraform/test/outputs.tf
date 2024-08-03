@@ -1,3 +1,0 @@
-export TF_VAR_variable1=value1
-export TF_VAR_variable2=value2
-terraform apply|plan

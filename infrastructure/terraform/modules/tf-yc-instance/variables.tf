@@ -15,7 +15,7 @@ variable "preemptible" {
   description = "scheduling_policy"
 }
 variable "nat" {
-  default     = "false"
+  default     = "true"
   type        = bool
   description = "nat"
 }
