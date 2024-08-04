@@ -1,58 +1,33 @@
-resource "yandex_compute_instance" "vm-1" {
-    name = "chapter5-lesson2-std-030-18"
+resource "yandex_compute_instance" "instance" {
+  name        = var.name
+  platform_id = var.platform_id
+  
+  resources {
+    cores  = var.cores
+    memory = var.memory
+  }
 
-    # Конфигурация ресурсов:
-    # количество процессоров и оперативной памяти
-    resources {
-        cores  = 2
-        memory = 2
+  boot_disk {
+    initialize_params {
+      image_id = var.image_id
+      size     = var.disk_size
     }
-	
-	zone = var.instance_zone
-	# platform_id = "standard-v1"
-	platform_id = var.platform_id
-	
-    # Загрузочный диск:
-    # здесь указывается образ операционной системы
-    # для новой виртуальной машины
-    boot_disk {
-        initialize_params {
-            image_id = "fd80qm01ah03dkqb14lc"
-			size = var.disk_size
-        }
-    }
+  }
 
-    # Сетевой интерфейс:
-    # нужно указать идентификатор подсети, к которой будет подключена ВМ
-    network_interface {
-        subnet_id = lookup(var.instance_subnet_ids, var.zone, null)
-        nat       = var.nat
-    }
+  network_interface {
+    subnet_id = lookup(var.subnet_id, var.zone)
+    nat       = var.nat
+  }
 
-    # Метаданные машины:
-    # здесь можно указать скрипт, который запустится при создании ВМ
-    # или список SSH-ключей для доступа на ВМ
-    metadata = {
-        ssh-keys = "ansible:${file("~/.ssh/id_rsa.pub")}"
-        user-data = <<-EOF
-                    #!/bin/bash
-                    groupadd ansible
-                    useradd -g ansible ansible
-                    mkdir -p /home/ansible/.ssh
-                    chmod 700 /home/ansible/.ssh
-                    echo '${file("~/.ssh/id_rsa.pub")}' > /home/ansible/.ssh/authorized_keys
-                    chmod 600 /home/ansible/.ssh/authorized_keys
-                    echo 'ansible ALL=(ALL) NOPASSWD:ALL' | sudo tee /etc/sudoers.d/ansible
-                    sudo chown -R ansible:ansible /home/ansible
-                    EOF
-	}
-	#metadata = {
-        #ssh-keys = "ubuntu:${file("~/.ssh/id_rsa.pub")}"
-        #ssh-keys = "AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBJogSbb/PNfBUaQoIVoUxBpex7VdkQFI8zL0akaAtDKWg6583IW27twVz8PhX+LIeSMCdcoq1rO/zHWRCgFNqKg== student@chapter5-lesson2-std-030-18"
-    #}
-	
-	scheduling_policy {
-		# preemptible = true
-		preemptible = var.preemptible
-	}
-} 
+  metadata = {
+    user-data = templatefile("${path.module}/cloud-init.yaml", {
+      ssh_public_key = var.ssh_public_key
+    })
+  }
+
+  scheduling_policy {
+    preemptible = var.preemptible
+  }
+
+  zone = var.zone
+}

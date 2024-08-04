@@ -13,3 +13,7 @@ variable "folder_id" {
 variable "cloud_id" {
     description = "cloud_id"
 }
+variable "ssh_public_key" {
+  description = "Публичная часть  ключа"
+  type        = string
+}

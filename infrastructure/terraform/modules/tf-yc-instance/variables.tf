@@ -1,31 +1,63 @@
-variable "instance_zone" {
-  default     = "ru-central1-a"
+variable "name" {
+  description = "Имя ВМ"
   type        = string
-  description = "Instance availability zone"
-  validation {
-    condition     = contains(toset(["ru-central1-a", "ru-central1-b", "ru-central1-c"]), var.instance_zone)
-    error_message = "Select availability zone from the list: ru-central1-a, ru-central1-b, ru-central1-c."
-  }
-  sensitive = true
-  nullable = false
-} 
-variable "preemptible" {
-  default     = "true"
-  type        = bool
-  description = "scheduling_policy"
+  default     = "kns-vm"
 }
-variable "nat" {
-  default     = "true"
-  type        = bool
-  description = "nat"
-}
+
 variable "platform_id" {
-  default     = "standard-v1"
+  description = "ID платформы для ВМ"
   type        = string
-  description = "platform_id"
+  default     = "standard-v1"
 }
+
+variable "cores" {
+  description = "Количество ядер ЦП"
+  type        = number
+  default     = 2
+}
+
+variable "memory" {
+  description = "Количество ОЗУ в гигабайтах"
+  type        = number
+  default     = 4
+}
+
+variable "image_id" {
+  description = "Какой используется образ"
+  type        = string
+  default     = "fd84t8blmupgfjdv86br"
+}
+
 variable "disk_size" {
   description = "Размер диска в гигабайтах"
   type        = number
   default     = 50
-}    
+}
+
+variable "subnet_id" {
+  description = "Идентификатор подсети"
+  type = map(string)
+}
+
+variable "nat" {
+  description = "Определения NAT - вкл./выкл."
+  type        = bool
+  default     = true
+}
+
+variable "preemptible" {
+  description = "Может ли ВМ  быть принудительна остановлена в любой момент"
+  type        = bool
+  default     = true
+}
+
+variable "zone" {
+  description = "Зона в которой  будет  создана ВМ"
+  type        = string
+  default     = "ru-central1-a"
+}
+
+variable "ssh_public_key" {
+  description = "Публичная часть  ключа"
+  type        = string
+}
