@@ -1,0 +1,11 @@
+- name: create_user_frontend
+  import_tasks: create_user_frontend.yml
+  
+- name: download_frontend
+  import_tasks: download_frontend.yml
+
+- name: install nginx
+  import_tasks: installs.yml
+
+- name: Создаем сервисы фронтенд
+  import_tasks: create_frontend_services.yml

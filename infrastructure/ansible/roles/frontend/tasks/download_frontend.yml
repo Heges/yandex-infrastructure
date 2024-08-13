@@ -1,0 +1,13 @@
+- name: Creates directory
+  ansible.builtin.file:
+    path: "{{front_directory}}"
+    state: directory
+- name: Скачивание артефакта из Nexus фронтенда
+  get_url:
+    url: "{{ nexus_url }}/repository/{{nexus_repository_frontend_name}}/{{version}}/sausage-store-{{version}}.tar.gz"
+    dest: "{{ front_directory}}/front.tar.gz"
+    mode: '0755'
+    owner: "{{ frontend_user }}"
+    group: "{{ frontend_user }}"
+    username: "{{ nexus_repo_user }}"
+    password: "{{ nexus_repo_pass }}"

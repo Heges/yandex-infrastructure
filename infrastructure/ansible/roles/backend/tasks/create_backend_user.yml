@@ -1,0 +1,5 @@
+- name: Добавим сервисного пользователя
+  user:
+    name: "jarservice"
+    create_home: no
+    shell: /sbin/nologin

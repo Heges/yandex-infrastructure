@@ -1,0 +1,13 @@
+- name: backend
+  # Шаблон целевых хостов это группа хостов с именем backend
+  hosts: all
+  # Список ansible-ролей для backend-серверов
+  roles:
+    - backend
+
+- name: frontend
+  # Шаблон целевых хостов это группа хостов с именем frontend
+  hosts: all
+  # Список ansible-ролей для frontend-серверов
+  roles:
+    - frontend

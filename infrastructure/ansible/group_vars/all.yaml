@@ -1,0 +1,6 @@
+ansible_connection: ssh
+nexus_repo_pass: e332y7gL
+nexus_repo_user: std-030-18
+nexus_url: https://nexus.praktikum-services.tech
+
+artifact_name: sausage-store

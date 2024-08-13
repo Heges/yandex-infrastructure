@@ -1,0 +1,10 @@
+backend_maven_version: 0.1.0
+backend_service_user: jarservice
+backend_working_directory: /opt/sausage-store/
+backend_report_directory: /opt/sausage-store/reports/
+backend_lib_directory: /usr/lib/jvm/java-16-openjdk-amd64/bin/java
+backend_dest_directory: /etc/systemd/system/sausage-store-backend.service
+nexus_repository_backend_name: std-030-18-sausage-store-backend
+backend_group_id: com.yandex.practicum.devops
+java_apt_package: com.yandex.practicum.devops
+version: 1.0.1442885

@@ -1,0 +1,8 @@
+- name: Обновление кэша APT
+  apt:
+    update_cache: yes
+
+- name: Установка nginx для frontend
+  apt:
+    name: nginx
+    state: present
