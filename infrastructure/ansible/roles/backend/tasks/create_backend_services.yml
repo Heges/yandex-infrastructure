@@ -1,0 +1,11 @@
+- name: Шаблонизация конфига управляет настройками приложения с помощью переменных
+  template:
+    src: sausage-store-backend.service.j2
+    dest: "{{backend_dest_directory}}"
+- name: Перечитываем конфигурацию systemd
+  systemd:
+    daemon_reload: yes
+- name: всё готово - запускаем!
+  service:
+    name: sausage-store-backend
+    state: started

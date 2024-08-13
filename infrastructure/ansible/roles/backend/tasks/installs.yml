@@ -1,0 +1,8 @@
+- name: Обновление кэша APT
+  apt:
+    update_cache: yes
+
+- name: Установка OpenJDK 17 для backend
+  apt:
+    name: openjdk-17-jdk
+    state: present
