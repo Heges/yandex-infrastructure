@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+      - name: frontend
+        image: gitlab.praktikum-services.ru:5050/std-030-18/sausage-store/sausage-frontend:02f7cdf3bf9551aac80cb46a93428ad6982f5d46
+        imagePullPolicy: IfNotPresent
+        volumeMounts:
+        - name: nginx-conf
+          mountPath: /etc/nginx/nginx.conf
+          subPath: nginx.conf
+          readOnly: true
+        - name: docker-sock
+          mountPath: /tmp/docker.sock
+          readOnly: true
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 15
+          timeoutSeconds: 2
+          successThreshold: 1
+          failureThreshold: 6
+          periodSeconds: 30
+      volumes:
+      - name: docker-sock
+        hostPath:
+          path: /var/run/docker.sock
+      - name: nginx-conf
+        configMap:
+          name: nginx-conf
+          items:
+            - key: nginx.conf
+              path: nginx.conf
+      imagePullSecrets:
+        - name: docker-config-secret

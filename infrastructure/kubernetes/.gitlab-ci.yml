@@ -1,0 +1,48 @@
+stages:
+  - deploy
+  - test
+deploy-backend-job:
+  stage: deploy
+  image: bitnami/kubectl:1.31.1
+  script: 
+    - mkdir .kube
+    - echo "$kubeconfig" | base64 -d > .kube/config
+    - export KUBECONFIG=.kube/config
+    - kubectl apply -f kubernetes/backend/
+    - rm -f .kube/config
+  rules:
+    - when: manual
+
+deploy-backend-report-job:
+  stage: deploy
+  image: bitnami/kubectl:1.31.1
+  script: 
+    - mkdir .kube
+    - echo "$kubeconfig" | base64 -d > .kube/config
+    - export KUBECONFIG=.kube/config
+    - kubectl apply -f kubernetes/backend-report/
+    - rm -f .kube/config
+  rules:
+    - when: manual
+
+deploy-frontend-job:
+  stage: deploy
+  image: bitnami/kubectl:1.31.1
+  script: 
+    - mkdir .kube
+    - echo "$kubeconfig" | base64 -d > .kube/config
+    - export KUBECONFIG=.kube/config
+    - kubectl apply -f kubernetes/frontend/
+    - rm -f .kube/config
+  rules:
+    - when: manual
+
+test-sausage-store:
+  stage: test
+  script:
+    - curl -f https://std-030-18.k8s.praktikum-services.tech || echo "Sausage-store is not reachable!"
+  environment:
+    name: production
+    url: https://std-030-18.k8s.praktikum-services.tech
+  needs:
+    - deploy-frontend-job
