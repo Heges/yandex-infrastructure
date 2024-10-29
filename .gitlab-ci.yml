@@ -6,7 +6,7 @@ deploy-backend-job:
   image: bitnami/kubectl:1.31.1
   script: 
     - mkdir .kube
-    - echo "$kubeconfig" | base64 -d > .kube/config
+    - echo "$KUBECONFIG" | base64 -d > .kube/config
     - export KUBECONFIG=.kube/config
     - kubectl apply -f kubernetes/backend/
     - rm -f .kube/config
@@ -18,7 +18,7 @@ deploy-backend-report-job:
   image: bitnami/kubectl:1.31.1
   script: 
     - mkdir .kube
-    - echo "$kubeconfig" | base64 -d > .kube/config
+    - echo "$KUBECONFIG" | base64 -d > .kube/config
     - export KUBECONFIG=.kube/config
     - kubectl apply -f kubernetes/backend-report/
     - rm -f .kube/config
@@ -30,7 +30,7 @@ deploy-frontend-job:
   image: bitnami/kubectl:1.31.1
   script: 
     - mkdir .kube
-    - echo "$kubeconfig" | base64 -d > .kube/config
+    - echo "$KUBECONFIG" | base64 -d > .kube/config
     - export KUBECONFIG=.kube/config
     - kubectl apply -f kubernetes/frontend/
     - rm -f .kube/config
