@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: backend
-        image: gitlab.praktikum-services.ru:5050/std-030-18/sausage-store/sausage-backend:2e5c51938b2b4563402a75b6c61a0cfe8430ff66
+        image: gitlab.praktikum-services.ru:5050/std-030-18/sausage-store/sausage-backend:6b241e67601e4e5cf5f3eed467d81941f26bd454
         imagePullPolicy: IfNotPresent
         env:
           - name: VAULT_HOST
