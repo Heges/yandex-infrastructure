@@ -2,9 +2,9 @@
 apiVersion: autoscaling/v2beta2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: backend-report-hpa
+  name: backend-report
   labels:
-    app: backend-report-hpa
+    app: backend-report
 spec:
   minReplicas: 2
   maxReplicas: 5
@@ -13,7 +13,7 @@ spec:
     kind: Deployment
     name: backend-report
   metrics:
-    — type: resource
+    — type: Resource
       resource:
         name: cpu
         target:
