@@ -13,24 +13,14 @@ spec:
         app: backend-report
     spec:
       affinity:
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-        - matchExpressions:
-          - key: kubernetes.io/e2e-az-name
-            operator: In
-            values:
-            - e2e-az1
-            - e2e-az2
-      preferredDuringSchedulingIgnoredDuringExecution:
-      - weight: 1
-        preference:
-          matchExpressions:
-          - key: kubernetes.io/node-tier
-            operator: In
-            values:
-            - silver
-            - bronze
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    app: backend-report
+                topologyKey: "kubernetes.io/hostname"
       containers:
       - name: backend-report
         image: gitlab.praktikum-services.ru:5050/std-030-18/sausage-store/sausage-backend-report:02f7cdf3bf9551aac80cb46a93428ad6982f5d46
