@@ -1,4 +1,3 @@
----
 apiVersion: autoscaling/v2beta2
 kind: HorizontalPodAutoscaler
 metadata:
@@ -13,7 +12,7 @@ spec:
     kind: Deployment
     name: backend-report
   metrics:
-    — type: Resource
+    - type: Resource
       resource:
         name: cpu
         target:
