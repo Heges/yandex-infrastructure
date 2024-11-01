@@ -1,3 +1,4 @@
+---
 apiVersion: autoscaling/v2beta2
 kind: HorizontalPodAutoscaler
 metadata:
@@ -13,8 +14,14 @@ spec:
     name: backend-report
   metrics:
     - type: Resource
-      resource:
+    resource:
         name: cpu
         target:
           type: Utilization
           averageUtilization: 75
+    - type: Resource
+    resource:
+        name: memory
+        target:
+          type: Utilization
+          averageValue: 800Mi
