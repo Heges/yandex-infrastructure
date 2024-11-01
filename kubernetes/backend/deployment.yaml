@@ -5,7 +5,13 @@ metadata:
   name:  backend
 
 spec:
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 50%
+      maxSurge: 20% 
   replicas: 2
+  revisionHistoryLimit: 12
   selector:
     matchLabels:
       app: backend

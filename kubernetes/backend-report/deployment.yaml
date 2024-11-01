@@ -3,6 +3,25 @@ kind: Deployment
 metadata:
   name: backend-report
 spec:
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: kubernetes.io/e2e-az-name
+            operator: In
+            values:
+            - e2e-az1
+            - e2e-az2
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 1
+        preference:
+          matchExpressions:
+          - key: kubernetes.io/node-tier
+            operator: In
+            values:
+            - silver
+            - bronze
   replicas: 1
   selector:
     matchLabels:
@@ -15,6 +34,13 @@ spec:
       containers:
       - name: backend-report
         image: gitlab.praktikum-services.ru:5050/std-030-18/sausage-store/sausage-backend-report:02f7cdf3bf9551aac80cb46a93428ad6982f5d46
+        resources:
+            requests:
+              memory: "512Mi"
+              cpu: 0.1
+            limits:
+              memory: "1025Mi"
+              cpu: 0.2
         imagePullPolicy: IfNotPresent
         livenessProbe:
           httpGet:
