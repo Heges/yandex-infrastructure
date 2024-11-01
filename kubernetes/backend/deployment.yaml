@@ -3,15 +3,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name:  backend
-
 spec:
-  strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxUnavailable: 0
-      maxSurge: 20% 
   replicas: 2
-  revisionHistoryLimit: 12
   selector:
     matchLabels:
       app: backend
@@ -20,6 +13,12 @@ spec:
       labels:
         app: backend
     spec:
+        revisionHistoryLimit: 12
+        strategy:
+        type: RollingUpdate
+        rollingUpdate:
+          maxUnavailable: 0
+          maxSurge: 20% 
       containers:
       - name: backend
         image: gitlab.praktikum-services.ru:5050/std-030-18/sausage-store/sausage-backend:6b241e67601e4e5cf5f3eed467d81941f26bd454
