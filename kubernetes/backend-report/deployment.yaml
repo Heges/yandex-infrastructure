@@ -23,7 +23,7 @@ spec:
                 topologyKey: "kubernetes.io/hostname"
       containers:
       - name: backend-report
-        image: gitlab.praktikum-services.ru:5050/std-030-18/sausage-store/sausage-backend-report:02f7cdf3bf9551aac80cb46a93428ad6982f5d46
+        image: gitlab.praktikum-services.ru:5050/std-030-18/sausage-store/sausage-backend-report:519eb352b5563c70c587454d78409ae2e7edf641
         resources:
             requests:
               memory: "512Mi"
