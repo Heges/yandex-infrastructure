@@ -9,7 +9,7 @@ spec:
     rollingUpdate:
       maxUnavailable: 0
       maxSurge: 20% 
-  replicas: 2
+  replicas: 1
   revisionHistoryLimit: 12
   selector:
     matchLabels:
