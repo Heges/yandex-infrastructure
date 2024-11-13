@@ -42,7 +42,7 @@ deploy:
     - mkdir .kube
     - echo "$KUBECONFIG" | base64 -d > .kube/config
     - export KUBECONFIG=.kube/config
-    - cmod 600 .kube/config
+    - chmod 600 .kube/config
   needs:
     - release
   environment:
