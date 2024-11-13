@@ -31,7 +31,7 @@ release:
     - helm lint
     - helm package .
   script:
-    - curl -u "$NEXUS_REPO_USER":"$NEXUS_REPO_PASS" "$NEXUS_REPO_URL" --upload-file sausage-store-$VERSION.tgz -v
+    - curl -u "$NEXUS_REPO_USER":"$NEXUS_REPO_PASS" "$NEXUS_REPO_URL" --upload-file /opt/k8s-helm/sausage-store-$VERSION.tgz -v
   
 deploy:
   stage: deploy
