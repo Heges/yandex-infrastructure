@@ -18,16 +18,16 @@ release:
     - envsubst < charts/backend/values.yaml > charts/backend/values_substituted.yaml
     - envsubst < charts/backend-report/Chart.yaml > charts/backend-report/Chart_substituted.yaml
     - envsubst < charts/backend-report/values.yaml > charts/backend-report/values_substituted.yaml
-    - envsubst < charts/fronted/Chart.yaml > charts/fronted/Chart_substituted.yaml
-    - envsubst < charts/fronted/values.yaml > charts/fronted/values_substituted.yaml
+    - envsubst < charts/frontend/Chart.yaml > charts/frontend/Chart_substituted.yaml
+    - envsubst < charts/frontend/values.yaml > charts/frontend/values_substituted.yaml
     - mv values_substituted.yaml values.yaml
     - mv Chart_substituted.yaml Chart.yaml
     - mv charts/backend/Chart_substituted.yaml charts/backend/Chart.yaml
     - mv charts/backend/values_substituted.yaml charts/backend/values.yaml
     - mv charts/backend-report/Chart_substituted.yaml charts/backend-report/Chart.yaml
     - mv charts/backend-report/values_substituted.yaml charts/backend-report/values.yaml
-    - mv charts/fronted/Chart_substituted.yaml charts/fronted/Chart.yaml
-    - mv charts/fronted/values_substituted.yaml charts/fronted/values.yaml
+    - mv charts/frontend/Chart_substituted.yaml charts/frontend/Chart.yaml
+    - mv charts/frontend/values_substituted.yaml charts/frontend/values.yaml
     - helm lint
     - helm package
   script:
