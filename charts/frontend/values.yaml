@@ -1,5 +1,5 @@
   imageName: "sausage-frontend"
-  imageTag: "792b8d49e266996e504f5a87fc91ec2868dbd2fd"
+  imageTag: "519eb352b5563c70c587454d78409ae2e7edf641"
   replicas: 1
   port: 8080
   resources:

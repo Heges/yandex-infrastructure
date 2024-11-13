@@ -1,5 +1,5 @@
   imageName: "sausage-backend"
-  imageTag: "792b8d49e266996e504f5a87fc91ec2868dbd2fd"
+  imageTag: "519eb352b5563c70c587454d78409ae2e7edf641"
   resources:
     requests:
       memory: "256Mi"
