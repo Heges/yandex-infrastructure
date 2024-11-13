@@ -33,8 +33,8 @@ release:
   script:
     - |
       echo "Загрузка файла в Nexus через curl:"
-      echo "curl -u \"$NEXUS_REPO_USER:$NEXUS_REPO_PASS\" --upload-file \"sausage-store-$VERSION.tar.tgz\" \"$NEXUS_REPO_URL/repository/$NEXUS_REPO_HELM/$VERSION/sausage-store-$VERSION.tar.tgz\" -X PUT"
-      RESPONSE=$(curl -v -u "$NEXUS_REPO_USER:$NEXUS_REPO_PASS" --upload-file "sausage-store-$VERSION.tar.tgz" "$NEXUS_REPO_URL/repository/$NEXUS_REPO_HELM/$VERSION/sausage-store-$VERSION.tar.tgz" -X PUT 2>&1)
+      echo "curl -u \"$NEXUS_REPO_USER:$NEXUS_REPO_PASS\" --upload-file \"sausage-store-$VERSION.tar.tgz\" \"$NEXUS_REPO_URL/repository/$NEXUS_REPO_HELM/sausage-store-$VERSION.tar.tgz\" -X PUT"
+      RESPONSE=$(curl -v -u "$NEXUS_REPO_USER:$NEXUS_REPO_PASS" --upload-file "sausage-store-$VERSION.tar.tgz" "$NEXUS_REPO_URL/repository/$NEXUS_REPO_HELM/sausage-store-$VERSION.tar.tgz" -X PUT 2>&1)
       echo "Ответ от Nexus:"
       echo "$RESPONSE"
   
