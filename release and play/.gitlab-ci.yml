@@ -29,7 +29,7 @@ release:
     - mv charts/frontend/Chart_substituted.yaml charts/frontend/Chart.yaml
     - mv charts/frontend/values_substituted.yaml charts/frontend/values.yaml
     - helm lint
-    - helm package
+    - helm package .
   script:
     - curl -u "$NEXUS_REPO_USER":"$NEXUS_REPO_PASS" "$NEXUS_REPO_PASS" --upload-file sausage-store-$VERSION.tgz -v
   
