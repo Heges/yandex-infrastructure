@@ -10,7 +10,7 @@ release:
   image: alpine/helm:3.16.2
   before_script:
     - apk add gettext bash curl
-    - git clone -b sausage-store-chart https://oauth2:$INFRA_TOKEN@gitlab.praktikum-services.ru/std-030-18/infrastructure.git /opt/infra
+    - git clone -b k8s-helm https://oauth2:$INFRA_TOKEN@gitlab.praktikum-services.ru/std-030-18/infrastructure.git /opt/infra
     - cd /opt/infra/sausage-store-chart
     - envsubst < values.yaml > values_substituted.yaml
     - envsubst < Chart.yaml > Chart_substituted.yaml
