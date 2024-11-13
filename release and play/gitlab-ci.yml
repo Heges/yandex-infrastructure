@@ -1,0 +1,48 @@
+stages:
+  - release
+  - deploy
+  
+variables:
+  version: 1.0.${CI_PIPELINE_ID}
+  
+release:
+  stage: release
+  image: alpine/helm:3.16.2
+  before_script:
+    - apk add gettext bash curl
+    - git clone -b sausage-store-chart https://oauth2:$INFRA_TOKEN@gitlab.praktikum-services.ru/std-030-18/infrastructure.git /opt/infra
+    - cd /opt/infra/sausage-store-chart
+    - envsubst < values.yaml > values_substituted.yaml
+    - envsubst < Chart.yaml > Chart_substituted.yaml
+    - envsubst < charts/backend/Chart.yaml > charts/backend/Chart_substituted.yaml
+    - envsubst < charts/backend/values.yaml > charts/backend/values_substituted.yaml
+    - envsubst < charts/backend-report/Chart.yaml > charts/backend-report/Chart_substituted.yaml
+    - envsubst < charts/backend-report/values.yaml > charts/backend-report/values_substituted.yaml
+    - envsubst < charts/fronted/Chart.yaml > charts/fronted/Chart_substituted.yaml
+    - envsubst < charts/fronted/values.yaml > charts/fronted/values_substituted.yaml
+    - mv values_substituted.yaml values.yaml
+    - mv Chart_substituted.yaml Chart.yaml
+    - mv charts/backend/Chart_substituted.yaml charts/backend/Chart.yaml
+    - mv charts/backend/values_substituted.yaml charts/backend/values.yaml
+    - mv charts/backend-report/Chart_substituted.yaml charts/backend-report/Chart.yaml
+    - mv charts/backend-report/values_substituted.yaml charts/backend-report/values.yaml
+    - mv charts/fronted/Chart_substituted.yaml charts/fronted/Chart.yaml
+    - mv charts/fronted/values_substituted.yaml charts/fronted/values.yaml
+    - helm lint
+    - helm package
+  script:
+    - curl -u "$NEXUS_REPO_USER":"$NEXUS_REPO_PASS" "$NEXUS_REPO_PASS" --upload-file sausage-store-$VERSION.tgz -v
+  
+deploy:
+  stage: deploy
+  image: alpine/helm:3.16.2
+  script: 
+    - mkdir .kube
+    - echo "$KUBECONFIG" | base64 -d > .kube/config
+    - export KUBECONFIG=.kube/config
+    - cmod 600 .kube/config
+  needs:
+    - release
+  environment:
+    name: study
+    url: https://std-030-18.k8s.praktikum-services.tech
