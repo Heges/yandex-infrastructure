@@ -11,7 +11,7 @@ release:
   before_script:
     - apk add gettext bash curl
     - git clone -b k8s-helm https://oauth2:$INFRA_TOKEN@gitlab.praktikum-services.ru/std-030-18/infrastructure.git /opt/infra
-    - cd /opt/infra/sausage-store-chart
+    - cd /opt/infra/k8s-helm
     - envsubst < values.yaml > values_substituted.yaml
     - envsubst < Chart.yaml > Chart_substituted.yaml
     - envsubst < charts/backend/Chart.yaml > charts/backend/Chart_substituted.yaml
