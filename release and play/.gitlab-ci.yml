@@ -31,14 +31,11 @@ release:
     - helm lint
     - helm package .
   script:
-    - |
-      cd /opt/k8s-helm
-      ls -lahh
-      echo "Загрузка файла в Nexus через curl:"
-      pwd
-      "curl -u \"$NEXUS_REPO_USER:$NEXUS_REPO_PASS\" --upload-file \"/opt/k8s-helm/sausage-store-1.tgz\" \"$NEXUS_REPO_URL/repository/$NEXUS_REPO_HELM/sausage-store-$VERSION.tgz\" -v"
-      
-      # "curl -u \"$NEXUS_REPO_USER:$NEXUS_REPO_PASS\" --upload-file \"/opt/k8s-helm/sausage-store-1.tgz\" \"http://nexus.praktikum-services.tech/repository/std-030-18-helm2/sausage-store-$VERSION.tgz\" -v"
+    - cd /opt/k8s-helm
+    - ls -lahh
+    - echo "Загрузка файла в Nexus через curl:"
+    - pwd
+    - "curl -u \"$NEXUS_REPO_USER:$NEXUS_REPO_PASS\" --upload-file \"/opt/k8s-helm/sausage-store-1.tgz\" \"$NEXUS_REPO_URL/repository/$NEXUS_REPO_HELM/sausage-store-$VERSION.tgz\" -v"
   
 deploy:
   stage: deploy
