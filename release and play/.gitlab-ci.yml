@@ -33,7 +33,7 @@ release:
   script:
     - |
       cd /opt/k8s-helm
-      ls -lah
+      ls -lahh
       echo "Загрузка файла в Nexus через curl:"
       # "curl -u \"$NEXUS_REPO_USER:$NEXUS_REPO_PASS\" --upload-file \"/opt/k8s-helm/sausage-store-1.tgz\" \"$NEXUS_REPO_URL/repository/$NEXUS_REPO_HELM/sausage-store-$VERSION.tgz\" -v"
       pwd
