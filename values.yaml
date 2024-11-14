@@ -1,9 +1,9 @@
 global:
-  fqdn: "std-030-32.k8s.praktikum-services.tech"
+  fqdn: "std-030-18.k8s.praktikum-services.tech"
   imagePullPolicy: IfNotPresent
-  repository: "gitlab.praktikum-services.ru:5050/std-030-32/sausage-store"
+  repository: "gitlab.praktikum-services.ru:5050/std-030-18/sausage-store"
   revisionHistoryLimit: 12
-  vaultHost: "https://std-030-32.praktikum-services.tech:8200"
+  vaultHost: "https://std-030-18.praktikum-services.tech:8200"
   backendPort: 8080
   environment: study
-  version: "1.0.1624845"
+  version: "1"

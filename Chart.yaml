@@ -3,14 +3,14 @@ appVersion: latest
 dependencies:
 - name: backend
   repository: ""
-  version: "${VERSION}"
+  version: "1"
 - name: backend-report
   repository: ""
-  version: "${VERSION}"
+  version: "1"
 - name: frontend
   repository: ""
-  version: "${VERSION}"
+  version: "$1"
 description: Sausage-Store Helm Chart
 name: sausage-store
 type: application
-version: "${VERSION}"
+version: "1"
