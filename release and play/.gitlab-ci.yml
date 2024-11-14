@@ -46,7 +46,7 @@ deploy:
     - export KUBECONFIG=.kube/config
     - chmod 600 .kube/config
   script:
-    - helm repo add nexus "$NEXUS_REPO_HELM" --username "$NEXUS_REPO_USER" --password "$NEXUS_REPO_PASS"
+    - helm repo add nexus "$NEXUS_REPO_URL/repository/$NEXUS_REPO_HELM/" --username "$NEXUS_REPO_USER" --password "$NEXUS_REPO_PASS"
     - helm repo update
     - helm search repo nexus
     - echo "$NAMESPACE_K8S"
