@@ -51,7 +51,8 @@ deploy:
     - helm search repo nexus
     - echo "$NAMESPACE_K8S"
     - echo "$VERSION"
-    - helm upgrade --install sausage-store nexus/sausage-store --namespace "$NAMESPACE_K8S" --version 1 --atomic --timeout 15m
+    # - helm upgrade --install sausage-store nexus/sausage-store --namespace "$NAMESPACE_K8S" --version 1 --atomic --timeout 15m
+    - helm upgrade --install sausage-store nexus/sausage-store 
   needs:
     - release
   environment:
