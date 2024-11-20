@@ -23,7 +23,7 @@ spec:
       labels:
         app: backend-report
     spec:
-      containers:
+       containers:
         - name: backend-report
           image: "{{ .Values.global.repository }}/{{ .Values.imageName }}:{{ .Values.imageTag }}"
           imagePullPolicy: IfNotPresent
