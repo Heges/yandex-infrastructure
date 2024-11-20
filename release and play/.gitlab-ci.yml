@@ -52,7 +52,8 @@ deploy:
     - echo "$NAMESPACE_K8S"
     - echo "$VERSION"
     # - helm upgrade --install sausage-store nexus/sausage-store --namespace "$NAMESPACE_K8S" --version $VERSION --atomic --timeout 15m
-    - helm uninstall  sausage-store nexus/sausage-store --namespace "$NAMESPACE_K8S" --version 1.0.1654210
+    - helm list 
+    - helm uninstall prometheus-1.0.1654210 -n sausage-store
   needs:
     - release
   environment:
