@@ -53,7 +53,8 @@ deploy:
     - echo "$VERSION"
     # - helm upgrade --install sausage-store nexus/sausage-store --namespace "$NAMESPACE_K8S" --version $VERSION --atomic --timeout 15m
     - helm list 
-    - helm uninstall nexus/sausage-store-1.0.1654210
+    #- helm uninstall nexus/sausage-store-1.0.1654210
+    - helm uninstall nexus/sausage-store
   needs:
     - release
   environment:
