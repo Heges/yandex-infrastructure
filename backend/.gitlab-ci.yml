@@ -41,22 +41,6 @@ gitlab-sast-job:
     include:
       - template: Security/SAST.gitlab-ci.yml
 
-# sonarqube-sast-job:
-  # stage: test
-  # needs:
-    # - build-backend
-  # image: maven:3.8-openjdk-16
-  # variables:
-    # SPRING_FLYWAY_ENABLED: "false"
-    # SPRING_CLOUD_VAULT_ENABLED: "false"
-  # script:   
-    # - cd backend 
-    # - unset SPRING_DATASOURCE_URL
-    # - unset SPRING_DATASOURCE_USERNAME
-    # - unset SPRING_DATASOURCE_PASSWORD  
-    # - mvn verify sonar:sonar -Dsonar.projectKey=$SONAR_KEY_BACKEND -Dsonar.host.url=$SONARQUBE_URL -Dsonar.login=$SONAR_LOGIN -Dsonar.projectName=$SONAR_KEY_BACKEND -e -X
-
-
 upload-backend:
   stage: release
   variables:
