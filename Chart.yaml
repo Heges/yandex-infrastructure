@@ -3,15 +3,15 @@ appVersion: latest
 dependencies:
 - name: backend
   repository: ""
-  version: 1.0.1624845
+  version: $VERSION
 - name: backend-report
   repository: ""
-  version: 1.0.1624845
+  version: $VERSION
 - name: frontend
   repository: ""
-  version: 1.0.1624845
+  version: $VERSION
 description: Sausage-Store Helm Chart
 icon: file://sausage-store.jpg
 name: sausage-store
 type: application
-version: 1.0.1624845
+version: $VERSION
