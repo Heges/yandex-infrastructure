@@ -34,7 +34,7 @@ backend-report:
 
 frontend:
   imageName: "sausage-frontend"
-  imageTag: "1bc6c3ecc7317eb8fd6379b2de853e30e5b4a23a"
+  imageTag: "519eb352b5563c70c587454d78409ae2e7edf641"
   resources:
     requests:
       memory: "256Mi"

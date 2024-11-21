@@ -10,7 +10,7 @@
       memory: ""
       cpu: ""
   path: /
-  initialDelaySeconds: 95
+  initialDelaySeconds: 15
   timeoutSeconds: 2
   successThreshold: 1
   failureThreshold: 6
