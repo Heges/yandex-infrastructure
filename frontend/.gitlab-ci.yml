@@ -23,8 +23,8 @@ build-frontend:
 sonarqube-frontend-sast:
   stage: test
   script:
-    - cd frontend  
-    - sonar-scanner -Dsonar.projectKey=$SONAR_PROJECT_KEY_FRONT -Dsonar.sources=. -Dsonar.host.url=$SONARQUBE_URL -Dsonar.login=$SONAR_LOGIN_FRONT -Dsonar.projectName=$SONAR_PROJECT_NAME_FRONT
+    - cd frontend
+    - sonar-scanner -Dsonar.projectKey=${SONAR_KEY_FRONTEND} -Dsonar.sources=. -Dsonar.host.url=${SONARQUBE_URL} -Dsonar.login=${SONAR_LOGIN}
   image: sonarsource/sonar-scanner-cli
 
 
