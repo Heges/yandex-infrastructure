@@ -1,37 +1,47 @@
 stages:
   - release
   - deploy
-
+  
 variables:
   VERSION: 1.0.${CI_PIPELINE_ID}
-
+  
 release:
   stage: release
   image: alpine/helm:3.16.2
   before_script:
     - apk add gettext bash curl
-    - git clone -b sausage-store-chart https://oauth2:$INFRA_TOKEN@gitlab.praktikum-services.ru/std-030-18/infrastructure.git /opt/infra
-    - cd /opt/infra/sausage-store-chart
+    - git clone -b k8s-helm https://oauth2:$INFRA_TOKEN@gitlab.praktikum-services.ru/std-030-18/infrastructure.git /opt/k8s-helm
+    - cd /opt/k8s-helm
     - envsubst < values.yaml > values_substituted.yaml
     - envsubst < Chart.yaml > Chart_substituted.yaml
     - envsubst < charts/backend/Chart.yaml > charts/backend/Chart_substituted.yaml
+    - envsubst < charts/backend/values.yaml > charts/backend/values_substituted.yaml
     - envsubst < charts/backend-report/Chart.yaml > charts/backend-report/Chart_substituted.yaml
+    - envsubst < charts/backend-report/values.yaml > charts/backend-report/values_substituted.yaml
     - envsubst < charts/frontend/Chart.yaml > charts/frontend/Chart_substituted.yaml
+    - envsubst < charts/frontend/values.yaml > charts/frontend/values_substituted.yaml
     - mv values_substituted.yaml values.yaml
     - mv Chart_substituted.yaml Chart.yaml
     - mv charts/backend/Chart_substituted.yaml charts/backend/Chart.yaml
-    - mv charts/backend-report/Chart_substituted.yaml  charts/backend-report/Chart.yaml
-    - mv charts/frontend/Chart_substituted.yaml  charts/frontend/Chart.yaml
-    - helm lint .
+    - mv charts/backend/values_substituted.yaml charts/backend/values.yaml
+    - mv charts/backend-report/Chart_substituted.yaml charts/backend-report/Chart.yaml
+    - mv charts/backend-report/values_substituted.yaml charts/backend-report/values.yaml
+    - mv charts/frontend/Chart_substituted.yaml charts/frontend/Chart.yaml
+    - mv charts/frontend/values_substituted.yaml charts/frontend/values.yaml
+    - helm lint
     - helm package .
   script:
+    - cd /opt/k8s-helm
+    - ls -lahh
+    - echo "Загрузка файла в Nexus через curl:"
+    - pwd
     - "curl -u \"$NEXUS_REPO_USER:$NEXUS_REPO_PASS\" --upload-file \"/opt/k8s-helm/sausage-store-$VERSION.tgz\" \"$NEXUS_REPO_URL/repository/$NEXUS_REPO_HELM/sausage-store-$VERSION.tgz\" -v"
-
+  
 deploy:
   stage: deploy
   image: alpine/helm:3.16.2
-  before_script:
-    - mkdir -p .kube
+  before_script: 
+    - mkdir .kube
     - echo "$KUBECONFIG" | base64 -d > .kube/config
     - export KUBECONFIG=.kube/config
     - chmod 600 .kube/config
@@ -41,10 +51,9 @@ deploy:
     - helm search repo nexus
     - echo "$NAMESPACE_K8S"
     - echo "$VERSION"
-    - helm upgrade --install sausage-store nexus/sausage-store --namespace "$NAMESPACE_K8S" --version "$VERSION" --atomic --timeout 15m
-  needs: 
+    - helm upgrade --install sausage-store nexus/sausage-store --namespace "$NAMESPACE_K8S" --version $VERSION --atomic --timeout 15m
+  needs:
     - release
   environment:
-      name: study
-      url: https://std-030-18.k8s.praktikum-services.tech
-  
+    name: study
+    url: https://std-030-18.k8s.praktikum-services.tech
