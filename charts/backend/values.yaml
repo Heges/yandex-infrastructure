@@ -1,14 +1,14 @@
-  imageName: "sausage-backend"
-  imageTag: "519eb352b5563c70c587454d78409ae2e7edf641"
+  imageName: ""
+  imageTag: ""
+  replicas: ""
+  port: ""
   resources:
     requests:
-      memory: "256Mi"
-      cpu: "50m"
+      memory: ""
+      cpu: ""
     limits:
-      memory: "512Mi"
-      cpu: "100m"
-  port: 8080
-  replicas: 1
+      memory: ""
+      cpu: ""
   maxUnavailable: 0
   maxSurge: 20%
   path: /actuator/health

@@ -1,8 +1,7 @@
----
 apiVersion: v1
 kind: Service
 metadata:
-  name: backend
+  name: backend-helm
   labels:
     app: backend
 spec:
@@ -13,3 +12,4 @@ spec:
       targetPort: {{ .Values.global.backendPort }}
   selector:
     app: backend 
+
