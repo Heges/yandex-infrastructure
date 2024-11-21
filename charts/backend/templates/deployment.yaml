@@ -1,8 +1,7 @@
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name:  backend
+  name: backend
   namespace: "{{ .Release.Namespace }}"
   labels:
     app.kubernetes.io/name: sausage-backend
@@ -14,20 +13,24 @@ metadata:
     app.kubernetes.io/part-of: sausage-store
     env: "{{ .Values.global.environment }}"
 spec:
-  strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxUnavailable: {{ .Values.maxUnavailable }}
-      maxSurge: {{ .Values.maxSurge }} 
-  replicas: {{ .Values.replicas }}
+  replicas: 1
   revisionHistoryLimit: {{ .Values.global.revisionHistoryLimit }}
   selector:
     matchLabels:
       app: backend
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: {{ .Values.maxUnavailable }}
+      maxSurge: {{ .Values.maxSurge }}
   template:
     metadata:
       labels:
         app: backend
+      annotations:
+        prometheus.io/path: /actuator/prometheus
+        prometheus.io/port: "8080"
+        prometheus.io/scrape: "true"
     spec:
       containers:
       - name: backend
@@ -39,11 +42,11 @@ spec:
           - name: VAULT_TOKEN
             valueFrom:
               secretKeyRef:
-                name: vault
+                name: vault-helm-backend
                 key: vault_token
         ports:
           - name: backend
-            containerPort: {{ .Values.port }} 
+            containerPort: {{ .Values.port }}  
         livenessProbe:
           httpGet:
             path: {{ .Values.path }}

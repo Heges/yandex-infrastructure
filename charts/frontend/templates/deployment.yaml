@@ -13,16 +13,18 @@ metadata:
     app.kubernetes.io/part-of: sausage-store
 
 spec:
-  replicas: {{ .Values.replicas }}
+  replicas: 1
   revisionHistoryLimit: {{ .Values.global.revisionHistoryLimit }}
   
   selector:
     matchLabels:
       app: frontend
+
   template:
     metadata:
       labels:
         app: frontend
+
     spec:
       containers:
       - name: frontend
@@ -51,6 +53,7 @@ spec:
         
         resources:
           {{ toYaml .Values.resources | nindent 12 }}
+          
       volumes:
         - name: docker-sock-helm
           hostPath:
@@ -61,8 +64,10 @@ spec:
             items:
               - key: nginx.conf
                 path: nginx.conf
+
       imagePullSecrets:
         - name: docker-config-secret
+
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:

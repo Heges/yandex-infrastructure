@@ -1,14 +1,14 @@
-  imageName: "sausage-frontend"
-  imageTag: "519eb352b5563c70c587454d78409ae2e7edf641"
-  replicas: 1
-  port: 8080
+  imageName: ""
+  imageTag: ""
+  replicas: ""
+  port: ""
   resources:
     requests:
-      memory: "256Mi"
-      cpu: "50m"
+      memory: ""
+      cpu: ""
     limits:
-      memory: "256Mi"
-      cpu: "100m"
+      memory: ""
+      cpu: ""
   path: /
   initialDelaySeconds: 95
   timeoutSeconds: 2
