@@ -43,6 +43,3 @@ frontend:
       memory: "256Mi"
       cpu: "100m"
   port: 8080
-
-
-
