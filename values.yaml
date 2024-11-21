@@ -10,7 +10,7 @@ global:
 
 backend:
   imageName: "sausage-backend"
-  imageTag: "$CI_COMMIT_SHA"
+  imageTag: "519eb352b5563c70c587454d78409ae2e7edf641"
   resources:
     requests:
       memory: "256Mi"
@@ -22,7 +22,7 @@ backend:
 
 backend-report:
   imageName: "sausage-backend-report"
-  imageTag: "$CI_COMMIT_SHA"
+  imageTag: "48879c3fd315ae9a42f1af6eb06df9788b3f9998"
   resources:
     requests:
       memory: "256Mi"
@@ -34,7 +34,7 @@ backend-report:
 
 frontend:
   imageName: "sausage-frontend"
-  imageTag: "$CI_COMMIT_SHA"
+  imageTag: "519eb352b5563c70c587454d78409ae2e7edf641"
   resources:
     requests:
       memory: "256Mi"
@@ -43,3 +43,6 @@ frontend:
       memory: "256Mi"
       cpu: "100m"
   port: 8080
+
+
+
