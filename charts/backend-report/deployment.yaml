@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-report
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend-report
+  template:
+    metadata:
+      labels:
+        app: backend-report
+    spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    app: backend-report
+                topologyKey: "kubernetes.io/hostname"
+      containers:
+      - name: backend-report
+        image: gitlab.praktikum-services.ru:5050/std-030-18/sausage-store/sausage-backend-report:519eb352b5563c70c587454d78409ae2e7edf641
+        resources:
+            requests:
+              memory: "512Mi"
+              cpu: 0.1
+            limits:
+              memory: "1025Mi"
+              cpu: 0.2
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8080
+          initialDelaySeconds: 15
+          timeoutSeconds: 2
+          successThreshold: 1
+          failureThreshold: 6
+          periodSeconds: 30
+        env:
+          - name: PORT
+            value: "8080"
+          - name: SPRING_DATA_MONGODB_URI
+            valueFrom:
+              secretKeyRef:
+                name: mongodb-uri
+                key: spring_data_mongodb_uri
+      imagePullSecrets:
+        - name: docker-config-secret

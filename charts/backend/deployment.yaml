@@ -1,0 +1,47 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name:  backend
+spec:
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 20% 
+  replicas: 1
+  revisionHistoryLimit: 12
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+      - name: backend
+        image: gitlab.praktikum-services.ru:5050/std-030-18/sausage-store/sausage-backend:519eb352b5563c70c587454d78409ae2e7edf641
+        imagePullPolicy: IfNotPresent
+        env:
+          - name: VAULT_HOST
+            value: http://std-030-18.praktikum-services.tech:8200
+          - name: VAULT_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: vault
+                key: vault_token
+        ports:
+          - name: backend
+            containerPort: 8080
+        livenessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8080
+          initialDelaySeconds: 15
+          timeoutSeconds: 2
+          successThreshold: 1
+          failureThreshold: 6
+          periodSeconds: 30
+      imagePullSecrets:
+        - name: docker-config-secret
