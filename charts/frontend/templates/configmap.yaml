@@ -1,10 +1,7 @@
 kind: ConfigMap
 apiVersion: v1
 metadata:
-  name: nginx-conf-helm   
-  annotations:
-    app.kubernetes.io/managed-by: "{{ .Release.Service }}"
-    helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+  name: nginx-conf
 data:
   nginx.conf: |
     user  nginx;
@@ -29,7 +26,7 @@ data:
         keepalive_timeout  65;
         server {
 
-          listen {{ .Values.port }};
+          listen 8080;
 
           location / {
           root   /usr/share/nginx/html;

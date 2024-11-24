@@ -8,8 +8,8 @@ metadata:
 spec:
   type: ClusterIP
   ports:
-    - port: {{ .Values.global.backendPort }}
+    - port: 8080
       protocol: TCP
-      targetPort: {{ .Values.global.backendPort }}
+      targetPort: 8080
   selector:
-    app: backend 
+    app: backend

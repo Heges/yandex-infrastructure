@@ -14,10 +14,10 @@ spec:
     containerPolicies:
       - containerName: "*"
         minAllowed:
-          cpu: {{ .Values.resources.requests.cpu }}
-          memory: {{ .Values.resources.requests.memory }}
+          cpu: 0m
+          memory: 0Mi
         maxAllowed:
-          cpu: {{ .Values.resources.limits.cpu }}
-          memory: {{ .Values.resources.limits.memory }}
+          cpu: 1
+          memory: 500Mi
         controlledResources: ["cpu", "memory"]
         controlledValues: RequestsAndLimits

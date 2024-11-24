@@ -1,14 +1,15 @@
+---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: frontend-helm
+  name: frontend
 spec:
   ingressClassName: "nginx"
   tls:
   - hosts:
-      - "{{ .Values.global.fqdn }}"
+      - "std-030-18.k8s.praktikum-services.tech"
   rules:
-  - host: "{{ .Values.global.fqdn }}"
+  - host: "std-030-18.k8s.praktikum-services.tech"
     http:
       paths:
       - path: /
@@ -17,4 +18,4 @@ spec:
           service:
             name: frontend
             port:
-              number: {{ .Values.port }}
+              number: 8080
