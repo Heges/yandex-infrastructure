@@ -10,7 +10,7 @@ release:
   image: alpine/helm:3.16.2
   before_script:
     - apk add gettext bash curl
-    - git clone -b k8s-helm-with-no-shablons https://oauth2:$INFRA_TOKEN@gitlab.praktikum-services.ru/std-030-18/infrastructure.git /opt/k8s-helm
+    - git clone -b k8s-helm-right-version https://oauth2:$INFRA_TOKEN@gitlab.praktikum-services.ru/std-030-18/infrastructure.git /opt/k8s-helm
     - cd /opt/k8s-helm
     - envsubst < values.yaml > values_substituted.yaml
     - envsubst < Chart.yaml > Chart_substituted.yaml
