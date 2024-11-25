@@ -53,7 +53,7 @@ spec:
           periodSeconds: 30
         env:
           - name: VAULT_HOST
-              value: "{{ .Values.global.vaultHost }}"
+            value: "{{ .Values.global.vaultHost }}"
           - name: VAULT_TOKEN
             valueFrom:
               secretKeyRef:
