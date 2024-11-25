@@ -32,7 +32,7 @@ spec:
                     app: backend-report
                 topologyKey: "kubernetes.io/hostname"
       containers:
-      - name: backend-report
+        - name: backend-report
         image: "{{ .Values.global.repository }}/{{ .Values.imageName }}:{{ .Values.imageTag }}"
         resources:
             requests:
