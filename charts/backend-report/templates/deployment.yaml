@@ -52,12 +52,15 @@ spec:
           failureThreshold: 6
           periodSeconds: 30
         env:
-          - name: PORT
-            value: "8080"
-          - name: SPRING_DATA_MONGODB_URI
+          - name: VAULT_HOST
+              value: "{{ .Values.global.vaultHost }}"
+          - name: VAULT_TOKEN
             valueFrom:
               secretKeyRef:
-                name: mongodb-uri
-                key: spring_data_mongodb_uri
+                name: vault-helm-backend-report
+                key: vault_token
+        ports:
+          - name: backend-report
+            containerPort: {{ .Values.port }}
       imagePullSecrets:
         - name: docker-config-secret
