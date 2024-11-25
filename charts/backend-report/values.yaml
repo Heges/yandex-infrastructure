@@ -1,5 +1,5 @@
   imageName: "sausage-backend-report"
-  imageTag: "519eb352b5563c70c587454d78409ae2e7edf641"
+  imageTag: "48879c3fd315ae9a42f1af6eb06df9788b3f9998"
   replicas:
     min: 1
     max: 5

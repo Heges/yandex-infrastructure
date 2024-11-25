@@ -2,8 +2,18 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: backend-report
+  namespace: "{{ .Release.Namespace }}"
+  labels:
+    app.kubernetes.io/name: sausage-backend-report
+    app.kubernetes.io/instance: "{{ .Release.Name }}"
+    app.kubernetes.io/version: "{{ .Chart.AppVersion }}"
+    app.kubernetes.io/managed-by: "{{ .Release.Service }}"
+    helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    app.kubernetes.io/component: backend-report
+    app.kubernetes.io/part-of: sausage-store
+    env: "{{ .Values.global.environment }}"
 spec:
-  replicas: 1
+  replicas: {{ .Values.replicas.min }}
   selector:
     matchLabels:
       app: backend-report
@@ -23,7 +33,7 @@ spec:
                 topologyKey: "kubernetes.io/hostname"
       containers:
       - name: backend-report
-        image: gitlab.praktikum-services.ru:5050/std-030-18/sausage-store/sausage-backend-report:519eb352b5563c70c587454d78409ae2e7edf641
+        image: "{{ .Values.global.repository }}/{{ .Values.imageName }}:{{ .Values.imageTag }}"
         resources:
             requests:
               memory: "512Mi"
@@ -33,15 +43,22 @@ spec:
               cpu: 0.2
         imagePullPolicy: IfNotPresent
         livenessProbe:
-          httpGet:
-            path: /actuator/health
-            port: 8080
-          initialDelaySeconds: 15
-          timeoutSeconds: 2
-          successThreshold: 1
-          failureThreshold: 6
-          periodSeconds: 30
+            httpGet:
+              path: {{ .Values.path }}
+              port: {{ .Values.port }}
+          initialDelaySeconds: {{ .Values.initialDelaySeconds }}
+          timeoutSeconds: {{ .Values.timeoutSeconds }}
+          successThreshold: {{ .Values.successThreshold }}
+          failureThreshold: {{ .Values.failureThreshold }}
+          periodSeconds: {{ .Values.periodSeconds }}
         env:
+          - name: VAULT_HOST
+              value: "{{ .Values.global.vaultHost }}"
+            - name: VAULT_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: vault-helm-backend-report
+                  key: vault_token
           - name: PORT
             value: "8080"
           - name: SPRING_DATA_MONGODB_URI
