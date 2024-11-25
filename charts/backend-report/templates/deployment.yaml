@@ -32,35 +32,35 @@ spec:
                     app: backend-report
                 topologyKey: "kubernetes.io/hostname"
       containers:
-      - name: backend-report
-        image: gitlab.praktikum-services.ru:5050/std-030-18/sausage-store/sausage-backend-report:48879c3fd315ae9a42f1af6eb06df9788b3f9998
-        resources:
-            requests:
-              memory: "512Mi"
-              cpu: 0.1
-            limits:
-              memory: "1025Mi"
-              cpu: 0.2
-        imagePullPolicy: IfNotPresent
-        livenessProbe:
-          httpGet:
-            path: /actuator/health
-            port: 8080
-          initialDelaySeconds: 15
-          timeoutSeconds: 2
-          successThreshold: 1
-          failureThreshold: 6
-          periodSeconds: 30
-        env:
-          - name: VAULT_HOST
-            value: "{{ .Values.global.vaultHost }}"
-          - name: VAULT_TOKEN
-            valueFrom:
-              secretKeyRef:
-                name: vault-helm-backend-report
-                key: vault_token
-        ports:
-          - name: backend-report
-            containerPort: {{ .Values.port }}
+        - name: backend-report
+          image: gitlab.praktikum-services.ru:5050/std-030-18/sausage-store/sausage-backend-report:48879c3fd315ae9a42f1af6eb06df9788b3f9998
+          env:
+            - name: VAULT_HOST
+              value: "{{ .Values.global.vaultHost }}"
+            - name: VAULT_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: vault-helm-backend-report
+                  key: vault_token
+          ports:
+            - name: backend-report
+              containerPort: {{ .Values.port }}
+          resources:
+              requests:
+                memory: "512Mi"
+                cpu: 0.1
+              limits:
+                memory: "1025Mi"
+                cpu: 0.2
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            httpGet:
+              path: {{ .Values.path }}
+              port: {{ .Values.port }}
+            initialDelaySeconds: {{ .Values.initialDelaySeconds }}
+            timeoutSeconds: {{ .Values.timeoutSeconds }}
+            successThreshold: {{ .Values.successThreshold }}
+            failureThreshold: {{ .Values.failureThreshold }}
+            periodSeconds: {{ .Values.periodSeconds }}
       imagePullSecrets:
         - name: docker-config-secret
