@@ -10,5 +10,5 @@ spec:
   ports:
   - name: frontend
     protocol: TCP
-    port: 8080
-    targetPort: 8080
+    port: {{ .Values.port }}
+    targetPort: {{ .Values.port }}

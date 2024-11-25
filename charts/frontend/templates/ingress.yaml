@@ -7,9 +7,9 @@ spec:
   ingressClassName: "nginx"
   tls:
   - hosts:
-      - "std-030-18.k8s.praktikum-services.tech"
+      - "{{ .Values.global.fqdn }}"
   rules:
-  - host: "std-030-18.k8s.praktikum-services.tech"
+  - host: "{{ .Values.global.fqdn }}"
     http:
       paths:
       - path: /
@@ -18,4 +18,4 @@ spec:
           service:
             name: frontend
             port:
-              number: 8080
+              number: {{ .Values.port }}
