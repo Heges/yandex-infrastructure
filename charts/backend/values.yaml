@@ -2,10 +2,10 @@
   imageTag: "f756e88c2b334662d52091d74a3c65658898fbbf"
   resources:
     requests:
-      memory: "256Mi"
+      memory: "1G"
       cpu: "50m"
     limits:
-      memory: "512Mi"
+      memory: "2G"
       cpu: "100m"
   port: 8080
   replicas: 1
