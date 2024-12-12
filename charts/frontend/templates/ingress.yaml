@@ -1,0 +1,21 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: frontend
+spec:
+  ingressClassName: "nginx"
+  tls:
+  - hosts:
+      - "{{ .Values.global.fqdn }}"
+  rules:
+  - host: "{{ .Values.global.fqdn }}"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: frontend
+            port:
+              number: {{ .Values.port }}

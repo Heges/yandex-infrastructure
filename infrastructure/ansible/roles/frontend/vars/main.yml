@@ -1,7 +1,0 @@
-frontend_user: frontend
-front_directory: /opt/www-data/frontend
-frontend_artifact_name: sausage-store-frontend
-nexus_repository_frontend_name: std-030-18-sausage-store-frontend
-frontend_root_path: /opt/www-data/frontend;
-frontend_server_name : std-030-18-2.praktikum-services.tech;
-version: 1.0.1442884
