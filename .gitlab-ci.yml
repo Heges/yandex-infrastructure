@@ -1,0 +1,2 @@
+include:
+  - local: 'release and play/.gitlab-ci.yml'

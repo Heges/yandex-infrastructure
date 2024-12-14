@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app.kubernetes.io/name: sausage-frontend
+    app.kubernetes.io/instance: "{{ .Release.Name }}"
+    app.kubernetes.io/version: "{{ .Chart.AppVersion }}"
+    app.kubernetes.io/managed-by: "{{ .Release.Service }}"
+    helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    app.kubernetes.io/component: frontend
+    app.kubernetes.io/part-of: sausage-store
+spec:
+  replicas: {{ .Values.replicas }}
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+      - name: frontend
+        image: "{{ .Values.global.repository }}/{{ .Values.imageName }}:{{ .Values.imageTag }}"
+        imagePullPolicy: IfNotPresent
+        volumeMounts:
+        - name: nginx-conf
+          mountPath: /etc/nginx/nginx.conf
+          subPath: nginx.conf
+          readOnly: true
+        - name: docker-sock
+          mountPath: /tmp/docker.sock
+          readOnly: true
+        livenessProbe:
+          httpGet:
+            path: {{ .Values.path }}
+            port: {{ .Values.port }}
+          initialDelaySeconds: {{ .Values.initialDelaySecond }}
+          timeoutSeconds: {{ .Values.timeoutSeconds }}
+          successThreshold: {{ .Values.successThreshold }}
+          failureThreshold: {{ .Values.failureThreshold }}
+          periodSeconds: {{ .Values.periodSeconds }}
+      volumes:
+      - name: docker-sock
+        hostPath:
+          path: /var/run/docker.sock
+      - name: nginx-conf
+        configMap:
+          name: nginx-conf
+          items:
+            - key: nginx.conf
+              path: nginx.conf
+      imagePullSecrets:
+        - name: docker-config-secret

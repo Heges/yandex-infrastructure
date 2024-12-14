@@ -1,0 +1,16 @@
+apiVersion: v2
+appVersion: latest
+dependencies:
+- name: backend
+  repository: ""
+  version: "$VERSION"
+- name: backend-report
+  repository: ""
+  version: "$VERSION"
+- name: frontend
+  repository: ""
+  version: "$VERSION"
+description: Sausage-Store Helm Chart
+name: sausage-store
+type: application
+version: "$VERSION"

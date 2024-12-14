@@ -1,5 +1,0 @@
-- name: Добавим сервисного пользователя для фронтенда
-  user:
-    name: "{{ frontend_user }}"
-    create_home: no
-    shell: /sbin/nologin

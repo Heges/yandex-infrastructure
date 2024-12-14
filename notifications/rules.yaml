@@ -1,0 +1,38 @@
+groups:
+  - name: Rules for Sausage Store
+    rules:
+      - alert: InstanceDown
+        expr: up{app="backend"} == 0
+        for: 1m
+        labels:
+          severity: critical
+          project: "sausage_store"
+          component: "Backend"
+        annotations:
+          summary: "Backend недоступен"
+          description: "namespace std-030-18 Backend  недоступен более 1 минуты."
+      - alert: HighErrorRate500
+        expr: sum(rate(http_server_requests_seconds_count{status="500"}[5m])) by (uri) > 0
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "namespace std-030-18 Уровень ошибок  500 в сильно возрос"
+          description: "В последние 5 минут возникли ошибки 500."
+      - alert: SlowPostOrders
+        expr: histogram_quantile(0.95, sum(rate(http_server_requests_seconds_bucket{uri="/api/orders", method="POST"}[5m])) by (le)) > 0.1
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "namespace std-030-18 высокая задержка для POST запросов к /api/orders"
+          description: "Задержка для POST-запросов к /api/orders превышает 100 мс за последние 5 минут."
+      - alert: ErrorOnActuatorPrometheus
+        expr: sum(rate(http_server_requests_seconds_count{uri="/actuator/prometheus", status!~"2.."}[2m])) > 0
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "namespace std-030-18 ошибка на /actuator/prometheus"
+          description: "В namespace std-030-18 возникли ошибки при доступе к /actuator/prometheus за последние 2 минуты."
+
